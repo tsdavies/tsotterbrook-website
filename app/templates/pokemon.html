@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<section>
+    <h2>Search Pokémon</h2>
+    <form method="post">
+        <input type="text" name="name" placeholder="Enter Pokémon name">
+        <button type="submit">Search</button>
+    </form>
+    {% if data %}
+        <h3>Results:</h3>
+        <p>Name: {{ data.name }}</p>
+        <img src="{{ data.sprites.front_default }}" alt="{{ data.name }}">
+    {% endif %}
+</section>
+{% endblock %}

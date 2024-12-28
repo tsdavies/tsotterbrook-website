@@ -1,0 +1,11 @@
+
+{% extends "layout.html" %}
+{% block content %}
+<h1>Blog Posts</h1>
+<ul>
+    {% for post in posts %}
+    <li><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></li>
+    {% endfor %}
+</ul>
+<a href="{{ url_for('new_post') }}">Create New Post</a>
+{% endblock %}
