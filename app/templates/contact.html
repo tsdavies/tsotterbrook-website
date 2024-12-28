@@ -1,19 +1,55 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block content %}
+<main class="container my-5">
+  <section>
+    <h2 class="text-center mb-4">Contact Me</h2>
 
-{% block content %}
-<section>
-    <h2>Contact Me</h2>
-    <form method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+    <form class="needs-validation" novalidate method="post">
+      <!-- Name -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Please enter your name.</div>
+      </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Please enter a valid email address.</div>
+      </div>
 
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" required></textarea>
+      <!-- Message -->
+      <div class="mb-3">
+        <label for="message" class="form-label">Message:</label>
+        <textarea
+          id="message"
+          name="message"
+          class="form-control"
+          rows="5"
+          required
+        ></textarea>
+        <div class="invalid-feedback">Please enter your message.</div>
+      </div>
 
-        <button type="submit">Send</button>
+      <!-- Submit Button -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-envelope-fill"></i> Send
+        </button>
+      </div>
     </form>
-</section>
+  </section>
+</main>
 {% endblock %}

@@ -1,20 +1,40 @@
-{% extends "layout.html" %}
-{% block content %}
-<h1>{{ 'Edit Post' if edit else 'Create New Post' }}</h1>
-<form method="POST" action="{{ url_for('edit_post', post_id=post.id) if edit else url_for('new_post') }}">
+{% extends "layout.html" %} {% block content %}
+<main class="container my-5">
+  <h1 class="text-center mb-4">
+    {{ 'Edit Post' if edit else 'Create New Post' }}
+  </h1>
+
+  <form
+    class="needs-validation"
+    novalidate
+    method="POST"
+    action="{{ url_for('edit_post', post_id=post.id) if edit else url_for('new_post') }}"
+  >
     {{ form.hidden_tag() }}
-    <p>
-        {{ form.title.label }}<br>
-        {{ form.title(size=50) }}
-    </p>
-    <p>
-        {{ form.content.label }}<br>
-        {{ form.content(rows=10, cols=50) }}
-    </p>
-    <p>
-        {{ form.author.label }}<br>
-        {{ form.author(size=20) }}
-    </p>
-    <p>{{ form.submit() }}</p>
-</form>
+
+    <!-- Title Field -->
+    <div class="mb-3">
+      {{ form.title.label(class="form-label") }} {{
+      form.title(class="form-control", size=50) }}
+      <div class="invalid-feedback">Please provide a title for the post.</div>
+    </div>
+
+    <!-- Content Field -->
+    <div class="mb-3">
+      {{ form.content.label(class="form-label") }} {{
+      form.content(class="form-control", rows=10) }}
+      <div class="invalid-feedback">Content cannot be empty.</div>
+    </div>
+
+    <!-- Author Field -->
+    <div class="mb-3">
+      {{ form.author.label(class="form-label") }} {{
+      form.author(class="form-control", size=20) }}
+      <div class="invalid-feedback">Please provide the author's name.</div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="text-center">{{ form.submit(class="btn btn-primary") }}</div>
+  </form>
+</main>
 {% endblock %}

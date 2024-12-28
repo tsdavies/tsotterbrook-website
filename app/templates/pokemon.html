@@ -1,16 +1,56 @@
-{% extends "layout.html" %}
+{% extends "layout.html" %} {% block content %}
+<main class="container my-5">
+  <section>
+    <h2 class="text-center mb-4">Search Pokémon</h2>
 
-{% block content %}
-<section>
-    <h2>Search Pokémon</h2>
-    <form method="post">
-        <input type="text" name="name" placeholder="Enter Pokémon name">
-        <button type="submit">Search</button>
+    <!-- Search Form -->
+    <form
+      class="needs-validation d-flex justify-content-center mb-4"
+      novalidate
+      method="post"
+    >
+      <input
+        type="text"
+        name="name"
+        placeholder="Enter Pokémon name"
+        class="form-control w-50 me-2"
+        required
+      />
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-search"></i> Search
+      </button>
+      <div class="invalid-feedback text-center">
+        Please enter a Pokémon name to search.
+      </div>
     </form>
+
+    <!-- Results Section -->
     {% if data %}
-        <h3>Results:</h3>
-        <p>Name: {{ data.name }}</p>
-        <img src="{{ data.sprites.front_default }}" alt="{{ data.name }}">
+
+    <div
+      class="card mx-auto text-center"
+      style="width: 18rem; border: 2px solid {{ data.color }}"
+    >
+      <div
+        class="card-header text-white"
+        style="background-color: {{ data.color }}"
+      >
+        <h3>{{ data.name | capitalize }}</h3>
+      </div>
+      <img
+        src="{{ data.sprites.front_default }}"
+        class="card-img-top mt-3"
+        alt="{{ data.name }}"
+      />
+      <div class="card-body">
+        <p class="card-text">
+          <strong>Type:</strong> {{ data.types | join(", ") }}<br />
+          <strong>Height:</strong> {{ data.height }}<br />
+          <strong>Weight:</strong> {{ data.weight }}
+        </p>
+      </div>
+    </div>
     {% endif %}
-</section>
+  </section>
+</main>
 {% endblock %}

@@ -1,11 +1,31 @@
+{% extends "layout.html" %} {% block content %}
+<main class="container my-5">
+  <h1 class="text-center mb-4">Blog Posts</h1>
 
-{% extends "layout.html" %}
-{% block content %}
-<h1>Blog Posts</h1>
-<ul>
+  <!-- Blog Posts List -->
+  <div class="row">
     {% for post in posts %}
-    <li><a href="{{ url_for('post_detail', post_id=post.id) }}">{{ post.title }}</a></li>
+    <div class="col-md-4">
+      <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <p class="card-text">{{ post.content[:150] }}...</p>
+          <a
+            href="{{ url_for('post_detail', post_id=post.id) }}"
+            class="btn btn-primary"
+            >Read More</a
+          >
+        </div>
+      </div>
+    </div>
     {% endfor %}
-</ul>
-<a href="{{ url_for('new_post') }}">Create New Post</a>
+  </div>
+
+  <!-- Create New Post Button -->
+  <div class="text-center mt-4">
+    <a href="{{ url_for('new_post') }}" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Create New Post
+    </a>
+  </div>
+</main>
 {% endblock %}

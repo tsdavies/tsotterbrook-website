@@ -1,16 +1,16 @@
+import os
 from app.extensions import mail
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, render_template_string, request, redirect, url_for, flash
 from app.models import db, User, BlogPost, Comment
 from app.forms import LoginForm, RegisterForm, BlogPostForm, CommentForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_mail import Message
-
-
-import os
+from app.pokemon_utils import pokemon_color
 
 
 def init_routes(app):
     @app.route('/')
+    @app.route('/about')
     def about():
         return render_template('about.html', title="About Me")
 
@@ -18,18 +18,18 @@ def init_routes(app):
     def pokemon():
         import requests
         data = None
+
         if request.method == 'POST':
             name = request.form.get('name')
             response = requests.get(
                 f'https://pokeapi.co/api/v2/pokemon/{name.lower()}')
+
             if response.ok:
                 data = response.json()
-        return render_template('pokemon.html', data=data, title="Pokémon Search")
+                data["types"] = [t["type"]["name"] for t in data["types"]]
+                data["color"] = pokemon_color(data["types"])
 
-    # @app.route('/blog')
-    # def blog():
-    #     posts = Post.query.all()
-    #     return render_template('blog.html', posts=posts, title="Blog")
+        return render_template('pokemon.html', data=data, title="Pokémon Search")
 
     @app.route('/contact', methods=['GET', 'POST'])
     def contact():
