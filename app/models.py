@@ -1,3 +1,8 @@
+from flask_login import logout_user, login_user, login_required, current_user
+from app.pokemon_utils import pokemon_color
+from flask_mail import Message
+from werkzeug.security import generate_password_hash, check_password_hash
+from app.forms import LoginForm, RegisterForm, BlogPostForm, CommentForm
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
@@ -9,6 +14,10 @@ class User(db.Model):
     username = db.Column(db.String(150), nullable=False, unique=True)
     email = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(200), nullable=False)
+
+    @property
+    def is_authenticated(self):
+        return True
 
 
 class BlogPost(db.Model):

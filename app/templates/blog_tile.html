@@ -6,22 +6,19 @@
         {% if post.summary %} {{ post.summary[:150] }} {% else %} {{
         post.content[:150] }} {% endif %} ...
       </p>
-    </div>
-    <div class="card-footer d-flex justify-content-between align-items-center">
-      <div>
+      <!-- Icons Section -->
+      <div class="card-icons text-center mt-3">
         {% if post.repository_url %}
         <a
           href="{{ post.repository_url }}"
           target="_blank"
           rel="noopener noreferrer"
-          class="mx-2"
           aria-label="View Repository"
         >
           <span
             class="iconify"
             data-icon="mdi:github"
-            data-width="30"
-            data-height="30"
+            aria-hidden="true"
             style="color: #4078c0"
           ></span>
         </a>
@@ -30,31 +27,34 @@
           href="{{ post.live_demo_url }}"
           target="_blank"
           rel="noopener noreferrer"
-          class="mx-2"
           aria-label="View Live Demo"
         >
           <span
             class="iconify"
             data-icon="mdi:web"
-            data-width="30"
-            data-height="30"
+            aria-hidden="true"
             style="color: #4caf50"
           ></span>
         </a>
         {% endif %} {% if not post.repository_url and not post.live_demo_url %}
-        <span
-          class="iconify mx-2"
-          data-icon="mdi:lightbulb"
-          data-width="30"
-          data-height="30"
-          style="color: #f0ad4e"
-          aria-label="Interesting Article"
-        ></span>
+        <a
+          href="{{ url_for('post_detail', post_id=post.id) }}"
+          aria-label="Read more"
+        >
+          <span
+            class="iconify"
+            data-icon="mdi:lightbulb"
+            aria-hidden="true"
+            style="color: #f0ad4e"
+          ></span>
+        </a>
         {% endif %}
       </div>
+    </div>
+    <div class="card-footer d-flex justify-content-end align-items-center">
       <a
         href="{{ url_for('post_detail', post_id=post.id) }}"
-        class="btn btn-primary"
+        class="card-button"
       >
         Read More
       </a>

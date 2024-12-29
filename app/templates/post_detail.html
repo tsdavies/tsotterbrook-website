@@ -10,6 +10,7 @@
   </div>
 
   <!-- Edit and Delete Buttons -->
+  {% if is_admin() %}
   <div class="text-center mb-4">
     <a
       href="{{ url_for('edit_post', post_id=post.id) }}"
@@ -25,7 +26,7 @@
       <i class="bi bi-trash"></i> Delete Post
     </a>
   </div>
-
+  {% endif %}
   <hr />
 
   <!-- Comments Section -->
@@ -42,6 +43,7 @@
           {{ comment.content }} -
           <strong>{{ comment.author or 'Anonymous' }}</strong>
         </span>
+        {% if current_user.is_authenticated %}
         <a
           href="{{ url_for('delete_comment', comment_id=comment.id) }}"
           class="btn btn-sm btn-outline-danger"
@@ -49,6 +51,7 @@
         >
           <i class="bi bi-x-circle"></i> Delete
         </a>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>
@@ -60,6 +63,7 @@
   <hr />
 
   <!-- Add a Comment Form -->
+  {% if current_user.is_authenticated %}
   <div class="add-comment">
     <h3 class="mb-3">Add a Comment</h3>
     <form
@@ -86,6 +90,7 @@
 
       <!-- Submit Button -->
       <div class="text-center">{{ form.submit(class="btn btn-primary") }}</div>
+      {% endif %}
     </form>
   </div>
 </main>
