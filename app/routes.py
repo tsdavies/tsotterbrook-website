@@ -1,6 +1,6 @@
 import os
 from app.extensions import mail
-from flask import render_template, render_template_string, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash
 from app.models import db, User, BlogPost, Comment
 from app.forms import LoginForm, RegisterForm, BlogPostForm, CommentForm
 from werkzeug.security import generate_password_hash, check_password_hash
