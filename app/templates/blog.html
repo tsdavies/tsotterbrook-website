@@ -7,17 +7,69 @@
     {% for post in posts %}
     <div class="col-md-4">
       <div class="card mb-4 shadow-sm">
+        <!-- Card Body -->
         <div class="card-body">
           <h5 class="card-title">{{ post.title }}</h5>
-          <p class="card-text">{{ post.content[:150] }}...</p>
+          <p class="card-text">
+            {% if post.summary %} {{ post.summary[:150] }} {% else %} {{
+            post.content[:150] }} {% endif %} ...
+          </p>
           <a
             href="{{ url_for('post_detail', post_id=post.id) }}"
             class="btn btn-primary"
             >Read More</a
           >
         </div>
+
+        <!-- Icons Section -->
+        <div class="card-footer text-center">
+          {% if post.repository_url %}
+          <a
+            href="{{ post.repository_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mx-2"
+            aria-label="View Repository"
+          >
+            <span
+              class="iconify"
+              data-icon="mdi:github"
+              data-width="30"
+              data-height="30"
+              style="color: #4078c0"
+            ></span>
+          </a>
+          {% endif %} {% if post.live_demo_url %}
+          <a
+            href="{{ post.live_demo_url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mx-2"
+            aria-label="View Live Demo"
+          >
+            <span
+              class="iconify"
+              data-icon="mdi:web"
+              data-width="30"
+              data-height="30"
+              style="color: #4caf50"
+            ></span>
+          </a>
+          {% endif %} {% if not post.repository_url and not post.live_demo_url
+          %}
+          <span
+            class="iconify mx-2"
+            data-icon="mdi:information"
+            data-width="30"
+            data-height="30"
+            style="color: #f0ad4e"
+            aria-label="Information Post"
+          ></span>
+          {% endif %}
+        </div>
       </div>
     </div>
+
     {% endfor %}
   </div>
 

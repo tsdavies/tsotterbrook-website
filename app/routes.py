@@ -112,8 +112,15 @@ def init_routes(app):
     def new_post():
         form = BlogPostForm()
         if form.validate_on_submit():
-            post = BlogPost(title=form.title.data,
-                            content=form.content.data, author=form.author.data)
+            # Include all fields from the form
+            post = BlogPost(
+                title=form.title.data,
+                content=form.content.data,
+                author=form.author.data,
+                summary=form.summary.data,
+                repository_url=form.repository_url.data,
+                live_demo_url=form.live_demo_url.data
+            )
             db.session.add(post)
             db.session.commit()
             flash('Post created!', 'success')
@@ -125,9 +132,13 @@ def init_routes(app):
         post = BlogPost.query.get_or_404(post_id)
         form = BlogPostForm(obj=post)
         if form.validate_on_submit():
+            # Update all fields
             post.title = form.title.data
             post.content = form.content.data
             post.author = form.author.data
+            post.summary = form.summary.data
+            post.repository_url = form.repository_url.data
+            post.live_demo_url = form.live_demo_url.data
             db.session.commit()
             flash('Post updated successfully!', 'success')
             return redirect(url_for('post_detail', post_id=post.id))

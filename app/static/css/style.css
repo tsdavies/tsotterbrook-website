@@ -280,3 +280,19 @@ header {
     }
 }
 
+.card-footer .iconify {
+  margin: 0 5px; /* Equivalent to mx-2 */
+}
+
+.card-footer .iconify[data-icon="mdi:github"] {
+  color: #4078c0; /* GitHub blue */
+}
+
+.card-footer .iconify[data-icon="mdi:web"] {
+  color: #4caf50; /* Green for live demo */
+}
+
+.card-footer .iconify[data-icon="mdi:information"] {
+  color: #f0ad4e; /* Amber for information */
+}
+

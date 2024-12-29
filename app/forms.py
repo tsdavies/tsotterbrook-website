@@ -1,3 +1,7 @@
+from wtforms import StringField, TextAreaField, SubmitField
+from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, Optional, URL, Regexp
+from wtforms import StringField, TextAreaField, URLField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
@@ -22,15 +26,24 @@ class RegisterForm(FlaskForm):
     ])
     submit = SubmitField('Register')
 
-from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired
 
 class BlogPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
+    summary = TextAreaField('Summary', validators=[Optional()])
     content = TextAreaField('Content', validators=[DataRequired()])
     author = StringField('Author', validators=[DataRequired()])
+    repository_url = URLField('Repository URL', validators=[
+        Optional(),
+        URL(message="Enter a valid URL"),
+        Regexp(r'^(https:\/\/github\.com\/|https:\/\/gitlab\.com\/)',
+               message="Must be a valid GitHub or GitLab URL")
+    ])
+    live_demo_url = URLField('Live Demo URL', validators=[
+        Optional(),
+        URL(message="Enter a valid URL")
+    ])
     submit = SubmitField('Submit')
+
 
 class CommentForm(FlaskForm):
     content = TextAreaField('Comment', validators=[DataRequired()])
