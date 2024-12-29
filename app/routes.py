@@ -1,5 +1,8 @@
 import os
-from flask import render_template, request, redirect, url_for, flash
+import markdown
+
+from markupsafe import Markup
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from app.models import db, User, BlogPost, Comment
 from app.forms import LoginForm, RegisterForm, BlogPostForm, CommentForm
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -70,7 +73,7 @@ def init_routes(app):
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
             if user and check_password_hash(user.password, form.password.data):
-                login_user(user)  # Correctly log the user in
+                login_user(user)
                 flash('Login successful!', 'success')
                 return redirect(url_for('about'))
             else:
@@ -84,7 +87,6 @@ def init_routes(app):
             if User.query.filter_by(email=form.email.data).first():
                 flash('Email already registered', 'danger')
                 return redirect(url_for('register'))
-            # Use pbkdf2:sha256 for hashing
             hashed_password = generate_password_hash(
                 form.password.data, method='pbkdf2:sha256')
             new_user = User(username=form.username.data,
@@ -102,30 +104,48 @@ def init_routes(app):
 
     @app.route('/blog/<int:post_id>', methods=['GET', 'POST'])
     def post_detail(post_id):
+        if not is_admin():
+            return render_template('forbidden.html')
         post = BlogPost.query.get_or_404(post_id)
         form = CommentForm()
         if form.validate_on_submit():
             comment = Comment(
                 content=form.content.data,
                 author=form.author.data,
-                post_id=post.id  # Ensure post_id is set
+                post_id=post.id
             )
             db.session.add(comment)
             db.session.commit()
             flash('Comment added!', 'success')
             return redirect(url_for('post_detail', post_id=post_id))
-        return render_template('post_detail.html', post=post, form=form)
+
+        rendered_content = Markup(markdown.markdown(
+            post.content, extensions=['fenced_code', 'codehilite']))
+        return render_template('post_detail.html', post=post, content=rendered_content, form=form)
+
+    @app.route('/markdown_preview', methods=['POST'])
+    @login_required
+    def markdown_preview():
+        if not is_admin():
+            return render_template('forbidden.html')
+
+        raw_markdown = request.json.get('markdown', '')
+        html_content = markdown.markdown(raw_markdown, extensions=[
+            'fenced_code', 'codehilite'])
+        return jsonify({'html': html_content})
 
     @app.route('/blog/new', methods=['GET', 'POST'])
     @login_required
     def new_post():
+        if not is_admin():
+            return render_template('forbidden.html')
+
         form = BlogPostForm()
         if form.validate_on_submit():
-            # Include all fields from the form
             post = BlogPost(
                 title=form.title.data,
                 content=form.content.data,
-                author=current_user.username,  # Use the current user as the author
+                author=current_user.username,
                 summary=form.summary.data,
                 repository_url=form.repository_url.data,
                 live_demo_url=form.live_demo_url.data
@@ -134,18 +154,19 @@ def init_routes(app):
             db.session.commit()
             flash('Post created!', 'success')
             return redirect(url_for('blog'))
-        return render_template('new_post.html', form=form)
+        return render_template('new_post.html', form=form, preview_endpoint=url_for('markdown_preview'))
 
     @app.route('/blog/<int:post_id>/edit', methods=['GET', 'POST'])
     @login_required
     def edit_post(post_id):
+        if not is_admin():
+            return render_template('forbidden.html')
         post = BlogPost.query.get_or_404(post_id)
         if current_user.email != "tammy@tsdavies.com":
             flash("You do not have permission to edit this post.", "danger")
             return redirect(url_for('blog'))
         form = BlogPostForm(obj=post)
         if form.validate_on_submit():
-            # Update all fields
             post.title = form.title.data
             post.content = form.content.data
             post.summary = form.summary.data
@@ -154,11 +175,13 @@ def init_routes(app):
             db.session.commit()
             flash('Post updated successfully!', 'success')
             return redirect(url_for('post_detail', post_id=post.id))
-        return render_template('new_post.html', form=form, post=post, edit=True)
+        return render_template('new_post.html', form=form, post=post, edit=True, preview_endpoint=url_for('markdown_preview'))
 
     @app.route('/blog/<int:post_id>/delete', methods=['POST', 'GET'])
     @login_required
     def delete_post(post_id):
+        if not is_admin():
+            return render_template('forbidden.html')
         post = BlogPost.query.get_or_404(post_id)
         if current_user.email != "tammy@tsdavies.com":
             flash("You do not have permission to delete this post.", "danger")

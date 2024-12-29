@@ -26,11 +26,19 @@
       <div class="invalid-feedback">Please provide a summary for the post.</div>
     </div>
 
-    <!-- Content Field -->
+    <!-- Content Field with Preview -->
     <div class="mb-3">
-      {{ form.content.label(class="form-label") }} {{
-      form.content(class="form-control", rows=10) }}
+      {{ form.content.label(class="form-label") }} {{ form.content(id="content",
+      class="form-control", rows=10) }}
       <div class="invalid-feedback">Content cannot be empty.</div>
+    </div>
+    <button type="button" id="preview-button" class="btn btn-secondary mb-3">
+      Preview Markdown
+    </button>
+
+    <!-- Markdown Preview Section -->
+    <div id="preview" class="border p-3" style="background-color: #f9f9f9">
+      <p class="text-muted">Your preview will appear here...</p>
     </div>
 
     <!-- Author Field -->
@@ -58,4 +66,31 @@
     <div class="text-center">{{ form.submit(class="btn btn-primary") }}</div>
   </form>
 </main>
+
+<!-- JavaScript for Markdown Preview -->
+<script>
+  document
+    .getElementById("preview-button")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      const content = document.getElementById("content").value;
+
+      fetch("{{ preview_endpoint }}", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ markdown: content }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("preview").innerHTML = data.html;
+        })
+        .catch((error) => {
+          document.getElementById("preview").innerHTML =
+            '<p class="text-danger">Error rendering preview. Please try again.</p>';
+          console.error("Error:", error);
+        });
+    });
+</script>
 {% endblock %}
