@@ -2,7 +2,7 @@ import os
 import markdown
 
 from markupsafe import Markup
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import render_template, request, redirect, url_for, flash, jsonify, session
 from app.models import db, User, BlogPost, Comment
 from app.forms import LoginForm, RegisterForm, BlogPostForm, CommentForm
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -25,12 +25,23 @@ def init_routes(app):
         return render_template('about.html', title="About Me")
 
     @app.route('/pokemon', methods=['GET', 'POST'])
-    def pokemon():
+    @app.route('/pokemon/<string:name>', methods=['GET', 'POST'])
+    def pokemon(name=None):
         import requests
         data = None
 
-        if request.method == 'POST':
-            name = request.form.get('name')
+        # Get the Pokémon name from query parameters or path
+        name = name or request.args.get('name', '').strip()
+
+        # Initialize session for recent Pokémon searches
+        if 'recent_searches' not in session:
+            session['recent_searches'] = []
+
+        # Fetch Pokémon data if a name is provided
+        if name or request.method == 'POST':
+            if request.method == 'POST':
+                name = request.form.get('name').strip()
+
             response = requests.get(
                 f'https://pokeapi.co/api/v2/pokemon/{name.lower()}')
 
@@ -39,7 +50,25 @@ def init_routes(app):
                 data["types"] = [t["type"]["name"] for t in data["types"]]
                 data["color"] = pokemon_color(data["types"])
 
-        return render_template('pokemon.html', data=data, title="Pokémon Search")
+                # Update recent searches
+                recent_search = {
+                    "name": data['name'],
+                    "sprite": data['sprites']['front_default']
+                }
+                session['recent_searches'] = [
+                    search for search in session['recent_searches'] if search["name"] != recent_search["name"]
+                ]
+                session['recent_searches'].append(recent_search)
+                session['recent_searches'] = session['recent_searches'][-10:]
+                session.modified = True
+
+        return render_template(
+            'pokemon.html',
+            data=data,
+            name=name,  # Pass the Pokémon name to the template
+            title="Pokémon Search",
+            recent_searches=session['recent_searches']
+        )
 
     @app.route('/contact', methods=['GET', 'POST'])
     def contact():
@@ -104,8 +133,6 @@ def init_routes(app):
 
     @app.route('/blog/<int:post_id>', methods=['GET', 'POST'])
     def post_detail(post_id):
-        if not is_admin():
-            return render_template('forbidden.html')
         post = BlogPost.query.get_or_404(post_id)
         form = CommentForm()
         if form.validate_on_submit():

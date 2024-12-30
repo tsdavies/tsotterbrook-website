@@ -1,39 +1,73 @@
 {% extends "layout.html" %} {% block content %}
 <main class="container my-5">
   <section>
+    <!-- Search Section -->
     <h2 class="text-center mb-4">Search Pokémon</h2>
 
     <!-- Search Form -->
-    <form
-      class="needs-validation d-flex justify-content-center mb-4"
-      novalidate
-      method="post"
-    >
-      <input
-        type="text"
-        name="name"
-        placeholder="Enter Pokémon name"
-        class="form-control w-50 me-2"
-        required
-      />
-      <button type="submit" class="btn btn-primary">
-        <i class="bi bi-search"></i> Search
-      </button>
-      <div class="invalid-feedback text-center">
-        Please enter a Pokémon name to search.
+    <form class="needs-validation" novalidate method="post">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+          <div class="input-group">
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter Pokémon name"
+              class="form-control me-2"
+              value="{{ name | default('') }}"
+              required
+            />
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-search"></i> Search
+            </button>
+            <div class="invalid-feedback">
+              Please enter a Pokémon name to search.
+            </div>
+          </div>
+        </div>
       </div>
     </form>
 
+    <!-- Recent Pokémon Searches -->
+    {% if recent_searches %}
+    <div class="recent-searches text-center mt-4">
+      <h5>Recent Searches</h5>
+      <div class="d-flex justify-content-center flex-wrap mt-2 mb-4">
+        {% for pokemon in recent_searches %}
+        <a
+          href="{{ url_for('pokemon', name=pokemon.name) }}"
+          class="text-center mx-2"
+          data-bs-toggle="tooltip"
+          title="{{ pokemon.name | capitalize }}"
+        >
+          <img
+            src="{{ pokemon.sprite }}"
+            alt="{{ pokemon.name }}"
+            class="rounded-circle"
+          />
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Not Found Section -->
+    {% if not_found %}
+    <div class="alert alert-danger text-center mt-4">
+      No Pokémon found with the name "{{ name | capitalize }}". Please try
+      again.
+    </div>
+    {% endif %}
+
     <!-- Results Section -->
     {% if data %}
-
     <div
       class="card mx-auto text-center"
       style="width: 18rem; border: 2px solid {{ data.color }}"
     >
       <div
         class="card-header text-white"
-        style="background-color: {{ data.color }}"
+        style="background-color: {{ data.color }};"
       >
         <h3>{{ data.name | capitalize }}</h3>
       </div>

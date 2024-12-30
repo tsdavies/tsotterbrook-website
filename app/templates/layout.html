@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title }}</title>
-    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Iconify -->
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 
     <!-- Custom Styles -->
@@ -20,6 +22,15 @@
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/blog_tile.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/pokemon.css') }}"
+    />
+    <link
+      rel="icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+      type="image/x-icon"
     />
   </head>
 
@@ -40,28 +51,31 @@
             <a
               class="nav-link {% if request.path == '/' %}active{% endif %}"
               href="/"
+              aria-label="Navigate to Home"
               >Home</a
             >
           </li>
           <li class="nav-item">
             <a
-              class="nav-link {% if request.path == '/blog' %}active{% endif %}"
+              class="nav-link {% if request.path.startswith('/blog') %}active{% endif %}"
               href="/blog"
+              aria-label="Navigate to Blog"
               >Blog</a
             >
           </li>
           <li class="nav-item">
             <a
-              class="nav-link {% if request.path == '/pokemon' %}active{% endif %}"
+              class="nav-link {% if request.path.startswith('/pokemon') %}active{% endif %}"
               href="/pokemon"
+              aria-label="Navigate to Pokémon"
               >Pokémon</a
             >
           </li>
-
           <li class="nav-item">
             <a
               class="nav-link {% if request.path == '/contact' %}active{% endif %}"
               href="/contact"
+              aria-label="Navigate to Contact"
               >Contact</a
             >
           </li>
@@ -70,7 +84,9 @@
         <ul class="navbar-nav right">
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="btn btn-primary" href="/logout">Logout</a>
+            <a class="btn btn-primary" href="/logout"
+              >Logout {{ current_user.username }}</a
+            >
           </li>
           {% else %}
           <li class="nav-item">
@@ -101,8 +117,6 @@
       <p>&copy; 2024 Tammy Davies. All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
