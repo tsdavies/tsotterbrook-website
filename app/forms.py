@@ -47,5 +47,4 @@ class BlogPostForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     content = TextAreaField('Comment', validators=[DataRequired()])
-    author = StringField('Author', validators=[DataRequired()])
     submit = SubmitField('Submit')
