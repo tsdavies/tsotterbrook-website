@@ -125,7 +125,7 @@ def register_blog_routes(app):
         if not is_admin():
             return render_template("authentication/forbidden.html")
         post = BlogPost.query.get_or_404(post_id)
-        if current_user.email != "tammy@tsdavies.com":
+        if not is_admin():
             flash("You do not have permission to edit this post.", "danger")
             return redirect(url_for("blog"))
         form = BlogPostForm(obj=post)
@@ -152,7 +152,7 @@ def register_blog_routes(app):
         if not is_admin():
             return render_template("authentication/forbidden.html")
         post = BlogPost.query.get_or_404(post_id)
-        if current_user.email != "tammy@tsdavies.com":
+        if not is_admin():
             flash("You do not have permission to delete this post.", "danger")
             return redirect(url_for("blog"))
         db.session.delete(post)
@@ -164,10 +164,7 @@ def register_blog_routes(app):
     @login_required
     def delete_comment(comment_id):
         comment = Comment.query.get_or_404(comment_id)
-        if (
-            comment.author != current_user.username
-            and current_user.email != "tammy@tsdavies.com"
-        ):
+        if comment.author != current_user.username and not is_admin():
             flash("You do not have permission to delete this comment.", "danger")
             return redirect(request.referrer or url_for("blog"))
         db.session.delete(comment)
