@@ -38,9 +38,6 @@ class BlogPostForm(FlaskForm):
     content = TextAreaField(
         "Content", validators=[DataRequired(message="Content cannot be empty.")]
     )
-    author = StringField(
-        "Author", validators=[DataRequired(message="Author name is required.")]
-    )
     repository_url = URLField(
         "Repository URL",
         validators=[
