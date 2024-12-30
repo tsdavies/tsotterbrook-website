@@ -8,43 +8,56 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length
 
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[
-        DataRequired(), Length(min=6)])
-    submit = SubmitField('Login')
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=6)])
+    submit = SubmitField("Login")
 
 
 class RegisterForm(FlaskForm):
-    username = StringField('Username', validators=[
-        DataRequired(), Length(min=3, max=25)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[
-        DataRequired(), Length(min=6)])
-    confirm_password = PasswordField('Confirm Password', validators=[
-        DataRequired(),
-        EqualTo('password', message='Passwords must match')
-    ])
-    submit = SubmitField('Register')
+    username = StringField(
+        "Username", validators=[DataRequired(), Length(min=3, max=25)]
+    )
+    email = StringField("Email", validators=[DataRequired(), Email()])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=6)])
+    confirm_password = PasswordField(
+        "Confirm Password",
+        validators=[
+            DataRequired(),
+            EqualTo("password", message="Passwords must match"),
+        ],
+    )
+    submit = SubmitField("Register")
 
 
 class BlogPostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    summary = TextAreaField('Summary', validators=[Optional()])
-    content = TextAreaField('Content', validators=[DataRequired()])
-    author = StringField('Author', validators=[DataRequired()])
-    repository_url = URLField('Repository URL', validators=[
-        Optional(),
-        URL(message="Enter a valid URL"),
-        Regexp(r'^(https:\/\/github\.com\/|https:\/\/gitlab\.com\/)',
-               message="Must be a valid GitHub or GitLab URL")
-    ])
-    live_demo_url = URLField('Live Demo URL', validators=[
-        Optional(),
-        URL(message="Enter a valid URL")
-    ])
-    submit = SubmitField('Submit')
+    title = StringField("Title", validators=[DataRequired()])
+    summary = TextAreaField(
+        "Summary",
+        validators=[DataRequired(message="Please provide a summary for the post.")],
+    )
+    content = TextAreaField(
+        "Content", validators=[DataRequired(message="Content cannot be empty.")]
+    )
+    author = StringField(
+        "Author", validators=[DataRequired(message="Author name is required.")]
+    )
+    repository_url = URLField(
+        "Repository URL",
+        validators=[
+            Optional(),
+            URL(message="Enter a valid URL"),
+            Regexp(
+                r"^(https:\/\/github\.com\/|https:\/\/gitlab\.com\/)",
+                message="Must be a valid GitHub or GitLab URL",
+            ),
+        ],
+    )
+    live_demo_url = URLField(
+        "Live Demo URL", validators=[Optional(), URL(message="Enter a valid URL")]
+    )
+    submit = SubmitField("Submit")
 
 
 class CommentForm(FlaskForm):
-    content = TextAreaField('Comment', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    content = TextAreaField("Comment", validators=[DataRequired()])
+    submit = SubmitField("Submit")

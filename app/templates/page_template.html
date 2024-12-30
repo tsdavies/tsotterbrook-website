@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -14,13 +14,10 @@
       href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Iconify -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
 
-    <!-- Custom Styles -->
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
@@ -33,15 +30,19 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/pokemon.css') }}"
     />
+
     <link
       rel="icon"
       href="{{ url_for('static', filename='images/favicon.ico') }}"
       type="image/x-icon"
     />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/flash_style.css') }}"
+    />
   </head>
 
   <body>
-    <!-- Header -->
     <header>
       <nav class="navbar">
         <ul class="navbar-nav left">
@@ -106,24 +107,21 @@
       </nav>
     </header>
 
-    <!-- Main Content -->
     <main>
-      {% block content %}
-      <div class="text-center">
-        <h1 class="display-4">Welcome to My App</h1>
-        <p class="lead">
-          Explore the Pokémon API, read the blog, or contact us for more!
-        </p>
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-messages">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
       </div>
-      {% endblock %}
+      {% endif %} {% endwith %} {% block content %} {% endblock %}
     </main>
 
-    <!-- Footer -->
     <footer>
       <p>&copy; 2024 Tammy Davies. All rights reserved.</p>
     </footer>
 
-    <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
   </body>
 </html>

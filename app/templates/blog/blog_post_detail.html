@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "page_template.html" %} {% block content %}
 <main class="container my-5">
   <!-- Back to Blog Button -->
   <div class="mb-4">
@@ -67,7 +67,7 @@
   </div>
 
   <!-- Post Content -->
-  <p class="lead">{{ post.content }}</p>
+  <p class="lead">{{ post.content|markdown|safe }}</p>
 
   <!-- Edit and Delete Buttons -->
   {% if is_admin() %}

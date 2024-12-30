@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "page_template.html" %} {% block content %}
 <main class="container my-5">
   <h1 class="text-center mb-4">
     {{ 'Edit Post' if edit else 'Create New Post' }}
@@ -37,15 +37,8 @@
     </button>
 
     <!-- Markdown Preview Section -->
-    <div id="preview" class="border p-3" style="background-color: #f9f9f9">
+    <div id="preview" class="border p-3 mb-2" style="background-color: #f9f9f9">
       <p class="text-muted">Your preview will appear here...</p>
-    </div>
-
-    <!-- Author Field -->
-    <div class="mb-3">
-      {{ form.author.label(class="form-label") }} {{
-      form.author(class="form-control", size=20) }}
-      <div class="invalid-feedback">Please provide the author's name.</div>
     </div>
 
     <!-- Repository URL Field -->

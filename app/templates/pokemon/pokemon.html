@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "page_template.html" %} {% block content %}
 <main class="container my-5">
   <section>
     <!-- Search Section -->
@@ -45,8 +45,11 @@
           <img
             src="{{ pokemon.sprite }}"
             alt="{{ pokemon.name | capitalize }}"
-            class="rounded-circle"
+            class="rounded-circle {{ 'preloaded-pokemon' if pokemon.preloaded else '' }}"
           />
+          {% if pokemon.preloaded %}
+          <span class="badge bg-success d-block mt-2">Preloaded</span>
+          {% endif %}
         </a>
         {% endfor %}
       </div>
@@ -54,7 +57,11 @@
     {% endif %}
 
     <!-- Not Found Section -->
-    {% if not_found %}
+    {% if data and data.error %}
+    <div class="alert alert-danger text-center mt-4" role="alert">
+      {{ data.error }}
+    </div>
+    {% elif not_found %}
     <div class="alert alert-danger text-center mt-4" role="alert">
       No Pokémon found with the name "{{ name | capitalize }}". Please try
       again.
@@ -62,7 +69,7 @@
     {% endif %}
 
     <!-- Results Section -->
-    {% if data %}
+    {% if data and not data.error %}
     <div
       class="card mx-auto text-center"
       style="max-width: 22rem; border: 2px solid {{ data.color }}"
