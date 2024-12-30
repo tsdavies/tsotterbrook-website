@@ -2,7 +2,7 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: "Prompt", "Roboto", Arial, sans-serif;
     background: linear-gradient(to bottom, #ffe4e1, #e0f7fa); /* Light pink to light blue gradient */
     color: #333;
     display: flex;
@@ -278,4 +278,48 @@ header {
         margin: 5px 0; /* Adds spacing between nav items */
         font-size: 16px;
     }
+}
+
+
+.h1 {
+  font-family: 'Prompt', sans-serif; /* Replace with your preferred font */
+  font-size: 2.5rem; /* Adjust size as needed */
+  font-weight: bold;
+  color: #333; /* Adjust colour as needed */
+  margin-bottom: 1rem;
+}
+.icon-text {
+  display: block;
+  font-size: 0.85rem;
+  color: #555; /* Adjust for your design */
+  margin-top: 0.25rem;
+  text-align: center;
+}
+
+.footer-icons {
+  display: flex;
+  align-items: center;
+}
+
+.footer-icons a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.85rem;
+}
+
+.footer-icons a .footer-icon-text {
+  margin-left: 0.25rem;
+}
+
+.card-button {
+  text-decoration: none;
+  font-size: 0.9rem;
+  color: #007bff; /* Adjust colour as needed */
+  font-weight: 500;
+}
+
+.card-button:hover {
+  text-decoration: underline;
 }

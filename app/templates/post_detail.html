@@ -1,13 +1,73 @@
 {% extends "layout.html" %} {% block content %}
 <main class="container my-5">
-  <!-- Post Title and Content -->
+  <!-- Back to Blog Button -->
   <div class="mb-4">
-    <h1 class="text-center">{{ post.title }}</h1>
-    <p class="text-muted text-center">
-      By {{ post.author or 'Anonymous' }} on {{ post.timestamp }}
-    </p>
-    <p class="lead">{{ post.content }}</p>
+    <a
+      href="{{ url_for('blog') }}"
+      class="btn btn-outline-secondary"
+      aria-label="Back to Blog"
+      title="Back to Blog"
+    >
+      <i class="bi bi-arrow-left"></i> Back to Blog
+    </a>
   </div>
+
+  <!-- Post Title and Icons -->
+  <div class="row align-items-center mb-4">
+    <!-- Blog Title -->
+    <div class="col-12 col-md-8 text-center text-md-start">
+      <h1 class="mb-0">{{ post.title }}</h1>
+      <p class="text-muted">
+        By {{ post.author or 'Anonymous' }} on {{ post.timestamp|format_datetime
+        }}
+      </p>
+    </div>
+    <!-- Icons Section -->
+    <div class="col-12 col-md-4 text-center text-md-end mt-3 mt-md-0">
+      {% if post.repository_url %}
+      <div class="d-inline-block text-center me-3">
+        <a
+          href="{{ post.repository_url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Repository"
+          title="View the repository on GitHub"
+          class="btn btn-primary rounded-circle p-3"
+        >
+          <span
+            class="iconify"
+            data-icon="mdi:github"
+            aria-hidden="true"
+            style="color: white; font-size: 1.5rem"
+          ></span>
+        </a>
+        <div class="icon-label mt-2">Code</div>
+      </div>
+      {% endif %} {% if post.live_demo_url %}
+      <div class="d-inline-block text-center">
+        <a
+          href="{{ post.live_demo_url }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="View Live Demo"
+          title="View the live demo"
+          class="btn btn-success rounded-circle p-3"
+        >
+          <span
+            class="iconify"
+            data-icon="mdi:web"
+            aria-hidden="true"
+            style="color: white; font-size: 1.5rem"
+          ></span>
+        </a>
+        <div class="icon-label mt-2">Demo</div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Post Content -->
+  <p class="lead">{{ post.content }}</p>
 
   <!-- Edit and Delete Buttons -->
   {% if is_admin() %}
@@ -31,8 +91,7 @@
 
   <!-- Comments Section -->
   <div class="comments-section">
-    <h2 class="mb-4">Comments</h2>
-
+    <h2 class="section-heading">Comments</h2>
     {% if post.comments and post.comments|length > 0 %}
     <ul class="list-group">
       {% for comment in post.comments %}
@@ -65,7 +124,10 @@
   <!-- Add a Comment Form -->
   {% if current_user.is_authenticated %}
   <div class="add-comment">
-    <h3 class="mb-3">Add a Comment</h3>
+    <h3 class="section-heading">Add a Comment</h3>
+    <p class="text-muted">
+      Comment as <strong>{{ current_user.username }}</strong>
+    </p>
     <form
       class="needs-validation"
       novalidate
@@ -81,17 +143,10 @@
         <div class="invalid-feedback">Please enter your comment.</div>
       </div>
 
-      <!-- Author -->
-      <div class="mb-3">
-        {{ form.author.label(class="form-label") }} {{
-        form.author(class="form-control", size=20) }}
-        <div class="invalid-feedback">Please enter your name.</div>
-      </div>
-
       <!-- Submit Button -->
       <div class="text-center">{{ form.submit(class="btn btn-primary") }}</div>
-      {% endif %}
     </form>
   </div>
+  {% endif %}
 </main>
 {% endblock %}

@@ -1,3 +1,4 @@
+from datetime import datetime
 import os
 import markdown
 
@@ -70,6 +71,11 @@ def init_routes(app):
             recent_searches=session['recent_searches']
         )
 
+    @app.template_filter('format_datetime')
+    def format_datetime(value, format="%d %b %Y, %H:%M"):
+        """Custom filter to format datetime objects."""
+        return value.strftime(format) if isinstance(value, datetime) else value
+
     @app.route('/contact', methods=['GET', 'POST'])
     def contact():
         if request.method == 'POST':
@@ -135,20 +141,65 @@ def init_routes(app):
     def post_detail(post_id):
         post = BlogPost.query.get_or_404(post_id)
         form = CommentForm()
-        if form.validate_on_submit():
-            comment = Comment(
-                content=form.content.data,
-                author=form.author.data,
-                post_id=post.id
-            )
-            db.session.add(comment)
-            db.session.commit()
-            flash('Comment added!', 'success')
-            return redirect(url_for('post_detail', post_id=post_id))
 
+        # Debugging: Log post information
+        print(f"Loaded post: {post.title} (ID: {post.id})")
+
+        if form.validate_on_submit():
+            # Debugging: Check form data
+            print("Form validated successfully")
+            print(f"Form content: {form.content.data}")
+            print(f"Author (current user): {current_user.username}")
+
+            try:
+                # Auto-populate the author with the current authenticated user's username
+                comment = Comment(
+                    content=form.content.data,
+                    author=current_user.username,  # Use the authenticated user's username
+                    post_id=post.id
+                )
+                db.session.add(comment)
+
+                # Debugging: Check database session before committing
+                print("Comment added to session")
+                db.session.commit()
+                print("Comment committed to database")
+
+                flash('Comment added!', 'success')
+                return redirect(url_for('post_detail', post_id=post_id))
+            except Exception as e:
+                # Debugging: Handle database errors
+                print(f"Error adding comment to database: {e}")
+                db.session.rollback()
+                flash('An error occurred while adding your comment.', 'danger')
+
+        else:
+            # Debugging: Log form validation errors
+            if form.errors:
+                print(f"Form validation failed with errors: {form.errors}")
+
+        # Fetch comments associated with the post
+        comments = Comment.query.filter_by(
+            post_id=post.id).order_by(Comment.timestamp.desc()).all()
+        print(f"Comments fetched for post (ID: {post.id}): {len(comments)}")
+
+        # Render the content with Markdown
         rendered_content = Markup(markdown.markdown(
             post.content, extensions=['fenced_code', 'codehilite']))
-        return render_template('post_detail.html', post=post, content=rendered_content, form=form)
+
+        # Debugging: Check if rendering is working
+        print("Rendering post detail page")
+
+        return render_template(
+            'post_detail.html',
+            post=post,
+            content=rendered_content,
+            form=form,
+            comments=comments
+        )
+    # rendered_content = Markup(markdown.markdown(
+    #     post.content, extensions=['fenced_code', 'codehilite']))
+    # return render_template('post_detail.html', post=post, content=rendered_content, form=form)
 
     @app.route('/markdown_preview', methods=['POST'])
     @login_required
