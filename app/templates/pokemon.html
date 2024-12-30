@@ -15,6 +15,7 @@
               placeholder="Enter Pokémon name"
               class="form-control me-2"
               value="{{ name | default('') }}"
+              aria-label="Search Pokémon"
               required
             />
             <button type="submit" class="btn btn-primary">
@@ -39,10 +40,11 @@
           class="text-center mx-2"
           data-bs-toggle="tooltip"
           title="{{ pokemon.name | capitalize }}"
+          aria-label="Recent Pokémon: {{ pokemon.name | capitalize }}"
         >
           <img
             src="{{ pokemon.sprite }}"
-            alt="{{ pokemon.name }}"
+            alt="{{ pokemon.name | capitalize }}"
             class="rounded-circle"
           />
         </a>
@@ -53,7 +55,7 @@
 
     <!-- Not Found Section -->
     {% if not_found %}
-    <div class="alert alert-danger text-center mt-4">
+    <div class="alert alert-danger text-center mt-4" role="alert">
       No Pokémon found with the name "{{ name | capitalize }}". Please try
       again.
     </div>
@@ -63,11 +65,11 @@
     {% if data %}
     <div
       class="card mx-auto text-center"
-      style="width: 18rem; border: 2px solid {{ data.color }}"
+      style="max-width: 22rem; border: 2px solid {{ data.color }}"
     >
       <div
         class="card-header text-white"
-        style="background-color: {{ data.color }};"
+        style="background-color: {{ data.color }}; color: {{ 'black' if data.color == '#ffffff' else 'white' }}"
       >
         <h3>{{ data.name | capitalize }}</h3>
       </div>

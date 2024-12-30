@@ -1,10 +1,10 @@
-<div class="col-md-4">
-  <div class="card mb-4 shadow-sm">
+<div class="col-md-4 mb-2">
+  <div class="card mb-4 shadow-sm h-100">
     <div class="card-body">
       <h5 class="card-title">{{ post.title }}</h5>
-      <p class="card-text">
-        {% if post.summary %} {{ post.summary[:150] }} {% else %} {{
-        post.content[:150] }} {% endif %} ...
+      <p class="card-text text-clamp">
+        {% if post.summary %} {{ post.summary }} {% else %} {{ post.content }}
+        {% endif %}
       </p>
     </div>
     <div class="card-footer d-flex justify-content-between align-items-center">
@@ -49,7 +49,7 @@
         href="{{ url_for('post_detail', post_id=post.id) }}"
         class="card-button"
       >
-        Read More
+        View
       </a>
     </div>
   </div>

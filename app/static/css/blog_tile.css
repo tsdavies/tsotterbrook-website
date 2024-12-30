@@ -2,6 +2,7 @@
 .card-body {
     padding: 1.5rem;
     position: relative; /* Ensure icons are well-positioned */
+
 }
 
 .card-title {
@@ -55,7 +56,7 @@
     border-radius: 20px; /* Rounded edges */
     padding: 0.5rem 1.5rem;
     font-weight: bold;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s;
