@@ -1,12 +1,14 @@
-import sys
 import logging
+import sys
 
 # Configure logging to output to stderr (required for OpenShift logs)
 logging.basicConfig(stream=sys.stderr)
 
 # Ensure the correct app path is added to the system path
 # Replace with the absolute path to your project if necessary
-sys.path.insert(0, "/root/customer-account-automation/")  # Update to your app's root directory
+sys.path.insert(
+    0, "/root/customer-account-automation/"
+)  # Update to your app's root directory
 
 # Import the application factory
 from app import create_app
@@ -22,4 +24,3 @@ if __name__ == "__main__":
     print("Registered routes:")
     print(app.url_map)  # Prints all routes for inspection
     app.run()  # Note: debug=True removed for production
-
