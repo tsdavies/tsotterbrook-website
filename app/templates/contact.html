@@ -1,55 +1,92 @@
 {% extends "page_template.html" %} {% block content %}
-<main class="container my-5">
-  <section>
-    <h2 class="text-center mb-4">Contact Me</h2>
+    <main class="container my-3">
+        <h2>Contact Me</h2>
+        <section class="card my-2">
+            <div class="card-body">
+                <h2 class="card-title">Follow Tammy Davies</h2>
+                <p class="card-text">Stay connected through social media:</p>
+                <ul class="list-unstyled">
 
-    <form class="needs-validation" novalidate method="post">
-      <!-- Name -->
-      <div class="mb-3">
-        <label for="name" class="form-label">Name:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">Please enter your name.</div>
-      </div>
+                    <li class="mb-2">
+                        <a href="https://bsky.app/profile/tsdavies.bsky.social" target="_blank"
+                           class="text-decoration-none d-flex align-items-center">
+                                <span class="iconify me-2" data-icon="mdi:butterfly-outline"
+                                      style="font-size: 1.5rem;"></span>
+                            BlueSky
+                        </a>
+                    </li>
 
-      <!-- Email -->
-      <div class="mb-3">
-        <label for="email" class="form-label">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          class="form-control"
-          required
-        />
-        <div class="invalid-feedback">Please enter a valid email address.</div>
-      </div>
+                    <li class="mb-2">
+                        <a href="https://www.instagram.com/tammy_s_davies" target="_blank"
+                           class="text-decoration-none d-flex align-items-center">
+                            <span class="iconify me-2" data-icon="mdi:instagram" style="font-size: 1.5rem;"></span>
+                            Instagram
+                        </a>
+                    </li>
 
-      <!-- Message -->
-      <div class="mb-3">
-        <label for="message" class="form-label">Message:</label>
-        <textarea
-          id="message"
-          name="message"
-          class="form-control"
-          rows="5"
-          required
-        ></textarea>
-        <div class="invalid-feedback">Please enter your message.</div>
-      </div>
+                    <li class="mb-2">
+                        <a href="https://www.facebook.com/tammy.davies" target="_blank"
+                           class="text-decoration-none d-flex align-items-center">
+                            <span class="iconify me-2" data-icon="mdi:facebook" style="font-size: 1.5rem;"></span>
+                            Facebook
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="card my-2">
+            <div class="card-body">
+                <h2 class="card-title">Or Email me</h2>
+                <p class="card-text">I look forward to hearing from you:</p>
+                <form class="needs-validation" novalidate method="post">
+                    <!-- Name -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name:</label>
+                        <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="form-control"
+                                required
+                        />
+                        <div class="invalid-feedback">Please enter your name.</div>
+                    </div>
 
-      <!-- Submit Button -->
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary">
-          <i class="bi bi-envelope-fill"></i> Send
-        </button>
-      </div>
-    </form>
-  </section>
-</main>
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-control"
+                                required
+                        />
+                        <div class="invalid-feedback">Please enter a valid email address.</div>
+                    </div>
+
+                    <!-- Message -->
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Message:</label>
+                        <textarea
+                                id="message"
+                                name="message"
+                                class="form-control"
+                                rows="5"
+                                required
+                        ></textarea>
+                        <div class="invalid-feedback">Please enter your message.</div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-envelope-fill"></i> Send
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </section>
+    </main>
 {% endblock %}
