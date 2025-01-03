@@ -1,4 +1,6 @@
 from flask import Flask
+
+from app.database.authentication import is_admin
 from app.extensions import mail, login_manager, migrate, db
 from app.routes import register_routes
 from datetime import datetime
@@ -45,5 +47,9 @@ def create_app():
     @app.context_processor
     def inject_user():
         return dict(current_user=current_user)
+
+    @app.context_processor
+    def inject_user_utils():
+        return dict(is_admin=is_admin)
 
     return app
