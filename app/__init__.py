@@ -1,6 +1,5 @@
 from flask import Flask
-from app.database.authentication.models.user import db
-from app.extensions import mail, login_manager, migrate
+from app.extensions import mail, login_manager, migrate, db
 from app.routes import register_routes
 from datetime import datetime
 from flask_login import current_user
