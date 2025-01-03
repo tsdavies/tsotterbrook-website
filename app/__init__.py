@@ -1,5 +1,5 @@
 from flask import Flask
-from app.models.user import db
+from app.database.authentication.models.user import db
 from app.extensions import mail, login_manager, migrate
 from app.routes import register_routes
 from datetime import datetime
@@ -38,7 +38,7 @@ def create_app():
     # Configure Flask-Login user loader
     @login_manager.user_loader
     def load_user(user_id):
-        from app.models.user import User
+        from app.database.authentication.models import User
 
         return User.query.get(int(user_id))
 

@@ -146,7 +146,7 @@
                 </form>
             </div>
         {% else %}
-            <p class="text-muted">Please <a href="/login"> login to comment</a>.</p>
+            <p class="text-muted">Please <a href="{{ url_for('auth.login') }}">Login to comment</a>.</p>
         {% endif %}
     </main>
 {% endblock %}
