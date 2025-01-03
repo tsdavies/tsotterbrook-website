@@ -1,10 +1,8 @@
-from wtforms import StringField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired
-from wtforms.validators import DataRequired, Optional, URL, Regexp
-from wtforms import StringField, TextAreaField, URLField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
+from wtforms import TextAreaField, URLField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
+from wtforms.validators import Optional, URL
 
 
 class LoginForm(FlaskForm):
@@ -40,14 +38,7 @@ class BlogPostForm(FlaskForm):
     )
     repository_url = URLField(
         "Repository URL",
-        validators=[
-            Optional(),
-            URL(message="Enter a valid URL"),
-            Regexp(
-                r"^(https:\/\/github\.com\/|https:\/\/gitlab\.com\/)",
-                message="Must be a valid GitHub or GitLab URL",
-            ),
-        ],
+        validators=[Optional(), URL(message="Enter a valid URL")],
     )
     live_demo_url = URLField(
         "Live Demo URL", validators=[Optional(), URL(message="Enter a valid URL")]
