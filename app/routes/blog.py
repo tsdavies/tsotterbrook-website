@@ -5,7 +5,7 @@ from flask import render_template, request, redirect, url_for, flash, jsonify
 from app.database.authentication import is_admin
 from app.extensions import db
 
-from app.database.models import BlogPost, Comment
+from app.database.blog.models import BlogPost, Comment
 from app.forms import BlogPostForm, CommentForm
 
 from flask_login import login_required, current_user
