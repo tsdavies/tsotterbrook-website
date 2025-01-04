@@ -10,7 +10,7 @@
   <!-- Create New Post Button -->
   {% if is_admin() %}
   <div class="text-center mt-4">
-    <a href="{{ url_for('new_post') }}" class="btn btn-success">
+    <a href="{{ url_for('blog.new_post') }}" class="btn btn-success">
       <i class="bi bi-plus-circle"></i> Create New Post
     </a>
   </div>

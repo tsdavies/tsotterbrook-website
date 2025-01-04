@@ -1,4 +1,5 @@
-def pokemon_color(types):
+def get_pokemon_color(types):
+    """Return the color for the primary Pokémon type."""
     type_colors = {
         "fire": "#EE8130",
         "water": "#6390F0",

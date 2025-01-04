@@ -96,16 +96,16 @@
         <ul class="navbar-nav right">
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="btn btn-primary" href="/logout"
+            <a class="btn btn-primary" href="{{ url_for('auth.logout') }}"
               >Logout {{ current_user.username }}</a
             >
           </li>
           {% else %}
           <li class="nav-item">
-            <a class="btn btn-primary" href="/login">Login</a>
+            <a class="btn btn-primary" href="{{ url_for('auth.login') }}">Login</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-outline-secondary" href="/register">Register</a>
+            <a class="btn btn-outline-secondary" href="{{ url_for('auth.register') }}">Register</a>
           </li>
           {% endif %}
         </ul>
