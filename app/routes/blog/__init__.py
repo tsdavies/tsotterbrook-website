@@ -1,14 +1,13 @@
 from flask import Blueprint
-from .routes import (
+from .blog import (
     blog,
-    post_detail,
-    markdown_preview,
-    new_post,
-    edit_post,
-    delete_post,
-    delete_comment,
 )
-
+from .delete_comment import delete_comment
+from .markdown_preview import markdown_preview
+from .delete_post import delete_post
+from .edit_post import edit_post
+from .new_post import new_post
+from .post_detail import post_detail
 
 # Define the Blueprint
 blog_bp = Blueprint("blog", __name__, template_folder="templates")
