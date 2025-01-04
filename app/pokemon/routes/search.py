@@ -16,7 +16,7 @@ def search(name=None):
         if not error and data:
             name = data.get("name", "")
             # Redirect to the GET version with the name in the query parameter
-            return redirect(url_for('pokemon.search', name=name))
+            return redirect(url_for("pokemon.search", name=name))
 
     name = name or request.args.get("name", "").strip()
     if name:

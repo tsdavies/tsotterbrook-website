@@ -3,8 +3,8 @@ from flask_login import login_required
 
 from app import db
 from app.authentication.database import is_admin
-from ..database.models import BlogPost
 from app.blog.forms.blog_post_form import BlogPostForm
+from ..database.models import BlogPost
 
 
 @login_required
@@ -19,6 +19,7 @@ def edit_post(post_id):
         post.summary = form.summary.data
         post.repository_url = form.repository_url.data
         post.live_demo_url = form.live_demo_url.data
+        post.priority = form.priority.data
         db.session.commit()
         flash("Post updated successfully!", "success")
         return redirect(url_for("blog.post_detail", post_id=post.id))

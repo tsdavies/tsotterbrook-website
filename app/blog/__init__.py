@@ -20,7 +20,7 @@ blog_bp = Blueprint("blog", __name__, template_folder="templates")
 @login_manager.unauthorized_handler
 def unauthorized():
     # Render an unauthorised template if the user is not logged in
-    return render_template('forbidden.html'), 403
+    return render_template("forbidden.html"), 403
 
 
 # Register routes with the Blueprint

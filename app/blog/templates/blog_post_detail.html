@@ -12,16 +12,19 @@
             </a>
         </div>
 
-        <!-- Post Title and Icons -->
+        <!-- Post Title and Metadata -->
         <div class="row align-items-center mb-4">
-            <!-- Blog Title -->
             <div class="col-12 col-md-8 text-center text-md-start">
                 <h1 class="mb-0">{{ post.title }}</h1>
                 <p class="text-muted">
                     By {{ post.author or 'Anonymous' }} on {{ post.timestamp|format_datetime }}
                 </p>
+                {% if post.priority %}
+                    <p class="badge bg-info">Priority: {{ post.priority }}</p>
+                {% endif %}
             </div>
-            <!-- Icons Section -->
+
+            <!-- Repository and Demo Links -->
             <div class="col-12 col-md-4 text-center text-md-end mt-3 mt-md-0">
                 {% if post.repository_url %}
                     <div class="d-inline-block text-center me-3">
@@ -33,35 +36,37 @@
                                 title="View the repository on GitHub"
                                 class="btn btn-primary rounded-circle p-3"
                         >
-          <span
-                  class="iconify"
-                  data-icon="mdi:github"
-                  aria-hidden="true"
-                  style="color: white; font-size: 1.5rem"
-          ></span>
+                    <span
+                            class="iconify"
+                            data-icon="mdi:github"
+                            aria-hidden="true"
+                            style="color: white; font-size: 1.5rem"
+                    ></span>
                         </a>
                         <div class="icon-label mt-2">Code</div>
                     </div>
-                {% endif %} {% if post.live_demo_url %}
-                <div class="d-inline-block text-center">
-                    <a
-                            href="{{ post.live_demo_url }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label="View Live Demo"
-                            title="View the live demo"
-                            class="btn btn-success rounded-circle p-3"
-                    >
-          <span
-                  class="iconify"
-                  data-icon="mdi:web"
-                  aria-hidden="true"
-                  style="color: white; font-size: 1.5rem"
-          ></span>
-                    </a>
-                    <div class="icon-label mt-2">Demo</div>
-                </div>
-            {% endif %}
+                {% endif %}
+
+                {% if post.live_demo_url %}
+                    <div class="d-inline-block text-center">
+                        <a
+                                href="{{ post.live_demo_url }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="View Live Demo"
+                                title="View the live demo"
+                                class="btn btn-success rounded-circle p-3"
+                        >
+                    <span
+                            class="iconify"
+                            data-icon="mdi:web"
+                            aria-hidden="true"
+                            style="color: white; font-size: 1.5rem"
+                    ></span>
+                        </a>
+                        <div class="icon-label mt-2">Demo</div>
+                    </div>
+                {% endif %}
             </div>
         </div>
 
@@ -86,6 +91,7 @@
                 </a>
             </div>
         {% endif %}
+
         <hr/>
 
         <!-- Comments Section -->
@@ -94,13 +100,10 @@
             {% if post.comments and post.comments|length > 0 %}
                 <ul class="list-group">
                     {% for comment in post.comments %}
-                        <li
-                                class="list-group-item d-flex justify-content-between align-items-center"
-                        >
-        <span>
-          {{ comment.content }} -
-          <strong>{{ comment.author or 'Anonymous' }}</strong>
-        </span>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                    {{ comment.content }} - <strong>{{ comment.author or 'Anonymous' }}</strong>
+                </span>
                             {% if current_user.is_authenticated %}
                                 <a
                                         href="{{ url_for('blog.delete_comment', comment_id=comment.id) }}"
@@ -135,18 +138,19 @@
                 >
                     {{ form.hidden_tag() }}
 
-                    <!-- Comment Content -->
                     <div class="mb-3">
-                        {{ form.content.label(class="form-label") }} {{ form.content(class="form-control", size=50) }}
+                        {{ form.content.label(class="form-label") }}
+                        {{ form.content(class="form-control", rows=5) }}
                         <div class="invalid-feedback">Please enter your comment.</div>
                     </div>
 
-                    <!-- Submit Button -->
                     <div class="text-center">{{ form.submit(class="btn btn-primary") }}</div>
                 </form>
             </div>
         {% else %}
-            <p class="text-muted">Please <a href="{{ url_for('authentication.login') }}">Login to comment</a>.</p>
+            <p class="text-muted">
+                Please <a href="{{ url_for('authentication.login') }}">Login to comment</a>.
+            </p>
         {% endif %}
     </main>
 {% endblock %}

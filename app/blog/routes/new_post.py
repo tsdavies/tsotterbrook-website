@@ -21,6 +21,7 @@ def new_post():
             summary=form.summary.data,
             repository_url=form.repository_url.data,
             live_demo_url=form.live_demo_url.data,
+            priority=form.priority.data,
         )
         db.session.add(post)
         db.session.commit()
