@@ -10,5 +10,5 @@ def login():
         success, message = authenticate_user(form.email.data, form.password.data)
         flash(message, "success" if success else "danger")
         if success:
-            return redirect(url_for("about"))
+            return redirect(url_for("about.about"))
     return render_template("login.html", form=form, title="Login")

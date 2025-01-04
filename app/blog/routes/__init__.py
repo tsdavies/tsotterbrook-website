@@ -6,4 +6,12 @@ from .delete_comment import delete_comment
 from .new_post import new_post
 from .markdown_preview import markdown_preview
 
-__all__ = ["blog","edit_post","post_detail","delete_post","delete_comment","new_post","markdown_preview"]
+__all__ = [
+    "blog",
+    "edit_post",
+    "post_detail",
+    "delete_post",
+    "delete_comment",
+    "new_post",
+    "markdown_preview",
+]

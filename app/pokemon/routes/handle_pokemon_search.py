@@ -18,5 +18,3 @@ def handle_pokemon_search():
         update_session_pokemon(data)
 
     return data, None if "error" not in data else data["error"]
-
-

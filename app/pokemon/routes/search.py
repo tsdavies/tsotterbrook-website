@@ -18,7 +18,6 @@ def search(name=None):
             # Redirect to the GET version with the name in the query parameter
             return redirect(url_for('pokemon.search', name=name))
 
-
     name = name or request.args.get("name", "").strip()
     if name:
         data = fetch_pokemon_by_name(name)
@@ -31,4 +30,3 @@ def search(name=None):
         title="Pokémon Search",
         recent_searches=session["recent_searches"],
     )
-

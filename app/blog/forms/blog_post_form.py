@@ -22,5 +22,3 @@ class BlogPostForm(FlaskForm):
         "Live Demo URL", validators=[Optional(), URL(message="Enter a valid URL")]
     )
     submit = SubmitField("Submit")
-
-

@@ -3,6 +3,7 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_mail import Message
 from app.extensions import mail
 
+
 def contact():
     if request.method == "POST":
         name = request.form.get("name")
