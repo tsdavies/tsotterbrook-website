@@ -21,6 +21,6 @@ def contact():
             flash(f"Thank you, {name}. Your message has been sent!", "success")
         except Exception as e:
             flash(f"An error occurred: {str(e)}", "danger")
-            return redirect(url_for("contact"))
+            return redirect(url_for("contact.contact"))
 
     return render_template("contact.html", title="Contact Me")
