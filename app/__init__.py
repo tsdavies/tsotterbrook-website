@@ -1,11 +1,13 @@
 from flask import Flask
 
-from app.database.authentication import is_admin
+from app.authentication.database import is_admin
 from app.extensions import mail, login_manager, migrate, db
-from app.routes import register_routes
+
 from datetime import datetime
 from flask_login import current_user
 from markdown import markdown
+
+from app.register_routes import register_routes
 
 
 def create_app():
@@ -39,7 +41,7 @@ def create_app():
     # Configure Flask-Login user loader
     @login_manager.user_loader
     def load_user(user_id):
-        from app.database.authentication.models import User
+        from app.authentication.database.models import User
 
         return User.query.get(int(user_id))
 
