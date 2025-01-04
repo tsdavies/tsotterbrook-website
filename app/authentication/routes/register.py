@@ -1,7 +1,7 @@
 from flask import flash, redirect, url_for, render_template
 
 from app.authentication.database import register_user
-from app.forms import RegisterForm
+from app.authentication.forms.register_form import RegisterForm
 
 
 def register():

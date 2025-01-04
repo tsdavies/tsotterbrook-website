@@ -5,7 +5,7 @@ from markupsafe import Markup
 
 from app import db
 from app.blog.database.models import BlogPost, Comment
-from app.forms import CommentForm
+from app.blog.forms.comment_form import CommentForm
 
 
 def post_detail(post_id):

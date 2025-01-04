@@ -4,7 +4,7 @@ from flask_login import login_required
 from app import db
 from app.authentication.database import is_admin
 from ..database.models import BlogPost
-from app.forms import BlogPostForm
+from app.blog.forms.blog_post_form import BlogPostForm
 
 
 @login_required

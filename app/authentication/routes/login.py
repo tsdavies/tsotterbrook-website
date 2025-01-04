@@ -1,7 +1,7 @@
 from flask import flash, redirect, url_for, render_template
 
 from app.authentication.database import authenticate_user
-from app.forms import LoginForm
+from app.authentication.forms.login_form import LoginForm
 
 
 def login():
