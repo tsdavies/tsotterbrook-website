@@ -1,4 +1,4 @@
-from flask import render_template, request, session
+from flask import render_template, request, session, url_for, jsonify, redirect
 
 from .fetch_pokemon_by_name import fetch_pokemon_by_name
 from .handle_pokemon_search import handle_pokemon_search
@@ -11,14 +11,17 @@ def search(name=None):
 
     initialise_session_pokemon()
 
-    # Handle POST requests
     if request.method == "POST":
         data, error = handle_pokemon_search()
-    else:
-        # Handle GET requests: Get Pokémon name from query parameters
-        name = name or request.args.get("name", "").strip()
-        if name:
-            data = fetch_pokemon_by_name(name)
+        if not error and data:
+            name = data.get("name", "")
+            # Redirect to the GET version with the name in the query parameter
+            return redirect(url_for('pokemon.search', name=name))
+
+
+    name = name or request.args.get("name", "").strip()
+    if name:
+        data = fetch_pokemon_by_name(name)
 
     return render_template(
         "pokemon/pokemon.html",
@@ -28,5 +31,4 @@ def search(name=None):
         title="Pokémon Search",
         recent_searches=session["recent_searches"],
     )
-
 

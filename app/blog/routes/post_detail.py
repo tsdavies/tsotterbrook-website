@@ -4,7 +4,7 @@ from flask_login import current_user
 from markupsafe import Markup
 
 from app import db
-from app.database.blog.models import BlogPost, Comment
+from app.blog.database.models import BlogPost, Comment
 from app.forms import CommentForm
 
 
@@ -37,7 +37,7 @@ def post_detail(post_id):
     )
 
     return render_template(
-        "blog/blog_post_detail.html",
+        "blog_post_detail.html",
         post=post,
         content=rendered_content,
         form=form,

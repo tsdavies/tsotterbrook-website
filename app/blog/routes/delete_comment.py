@@ -2,8 +2,8 @@ from flask import flash, redirect, request, url_for
 from flask_login import login_required, current_user
 
 from app import db
-from app.database.authentication import is_admin
-from app.database.blog.models import Comment
+from app.authentication.database import is_admin
+from ..database.models import Comment
 
 
 @login_required

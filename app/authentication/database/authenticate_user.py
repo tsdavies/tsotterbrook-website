@@ -1,7 +1,7 @@
 from flask_login import login_user
 from werkzeug.security import check_password_hash
 
-from app.database.authentication.models import User
+from app.authentication.database.models import User
 
 
 def authenticate_user(email, password):

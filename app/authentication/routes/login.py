@@ -1,6 +1,6 @@
 from flask import flash, redirect, url_for, render_template
 
-from app.database.authentication import authenticate_user
+from app.authentication.database import authenticate_user
 from app.forms import LoginForm
 
 
@@ -11,4 +11,4 @@ def login():
         flash(message, "success" if success else "danger")
         if success:
             return redirect(url_for("about"))
-    return render_template("authentication/login.html", form=form, title="Login")
+    return render_template("login.html", form=form, title="Login")

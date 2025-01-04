@@ -1,7 +1,7 @@
 from werkzeug.security import generate_password_hash
 
 from app.extensions import db
-from app.database.authentication.models import User
+from app.authentication.database.models import User
 
 
 def register_user(username, email, password):
