@@ -3,6 +3,7 @@ from .logout import logout
 from .login import login
 from .register import register
 
+#TODO: naming needs to be auth or authentication for clarity? Make it the same
 auth_bp = Blueprint("auth", __name__, template_folder="templates")
 
 # Register routes
