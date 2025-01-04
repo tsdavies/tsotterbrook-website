@@ -1,5 +1,7 @@
 from flask import Blueprint
-from .authentication import login, register, logout
+from .logout import logout
+from .login import login
+from .register import register
 
 auth_bp = Blueprint("auth", __name__, template_folder="templates")
 

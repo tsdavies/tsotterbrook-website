@@ -1,5 +1,5 @@
 import requests
-from .get_pokemon_color import get_pokemon_color
+from app.routes.pokemon.utils.get_pokemon_color import get_pokemon_color
 
 
 def fetch_pokemon_by_name(name):

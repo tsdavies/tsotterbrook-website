@@ -96,7 +96,7 @@
         <ul class="navbar-nav right">
           {% if current_user.is_authenticated %}
           <li class="nav-item">
-            <a class="btn btn-primary" href="/logout"
+            <a class="btn btn-primary" href="{{ url_for('auth.logout') }}"
               >Logout {{ current_user.username }}</a
             >
           </li>

@@ -1,18 +1,15 @@
 from flask import render_template, request, session
 
 from .fetch_pokemon_by_name import fetch_pokemon_by_name
-from .load_initial_pokemon import load_initial_pokemon
 from .handle_pokemon_search import handle_pokemon_search
+from .utils.initialise_session_pokemon import initialise_session_pokemon
 
 
 def search(name=None):
     data = None
     error = None
 
-    # Load prepopulated Pokémon if not already in the session
-    if "recent_searches" not in session or not session["recent_searches"]:
-        session["recent_searches"] = load_initial_pokemon()
-        session.modified = True
+    initialise_session_pokemon()
 
     # Handle POST requests
     if request.method == "POST":
@@ -31,3 +28,5 @@ def search(name=None):
         title="Pokémon Search",
         recent_searches=session["recent_searches"],
     )
+
+
