@@ -1,0 +1,15 @@
+from flask import Blueprint
+from .logout import logout
+from .login import login
+from .register import register
+
+#TODO: naming needs to be auth or authentication for clarity? Make it the same
+auth_bp = Blueprint("auth", __name__, template_folder="templates")
+
+# Register routes
+auth_bp.add_url_rule("/login", view_func=login, methods=["GET", "POST"])
+auth_bp.add_url_rule("/register", view_func=register, methods=["GET", "POST"])
+auth_bp.add_url_rule("/logout", view_func=logout, methods=["GET"])
+
+# Expose the blueprint for app to register
+__all__ = ["auth_bp"]

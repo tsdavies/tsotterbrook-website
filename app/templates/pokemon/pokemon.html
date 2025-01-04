@@ -36,7 +36,7 @@
       <div class="d-flex justify-content-center flex-wrap mt-2 mb-4">
         {% for pokemon in recent_searches %}
         <a
-          href="{{ url_for('pokemon', name=pokemon.name) }}"
+          href="{{ url_for('pokemon.search', name=pokemon.name) }}"
           class="text-center mx-2"
           data-bs-toggle="tooltip"
           title="{{ pokemon.name | capitalize }}"
