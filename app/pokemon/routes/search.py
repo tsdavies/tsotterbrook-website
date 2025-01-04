@@ -24,7 +24,7 @@ def search(name=None):
         data = fetch_pokemon_by_name(name)
 
     return render_template(
-        "pokemon/pokemon.html",
+        "pokemon.html",
         data=data,
         error=error,
         name=name,

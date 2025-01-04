@@ -1,6 +1,6 @@
 from flask import session
 
-from app.routes.pokemon.data.load_initial_pokemon_data import load_initial_pokemon
+from ..data.load_initial_pokemon_data import load_initial_pokemon
 
 
 def initialise_session_pokemon():

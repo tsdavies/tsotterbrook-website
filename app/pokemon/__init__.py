@@ -1,5 +1,6 @@
 from flask import Blueprint
-from .search import search
+
+from .routes import search
 
 pokemon_bp = Blueprint("pokemon", __name__, template_folder="templates")
 

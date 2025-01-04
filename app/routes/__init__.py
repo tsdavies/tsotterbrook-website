@@ -1,8 +1,7 @@
 from app.blog import blog_bp
+from app.pokemon import pokemon_bp
 from app.routes.contact import register_contact_routes
 from app.routes.about import register_about_routes
-from app.routes.pokemon import pokemon_bp
-
 from app.authentication import auth_bp
 
 def register_routes(app):
