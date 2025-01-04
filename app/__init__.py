@@ -1,11 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask
 
 from app.authentication.database import is_admin
 from app.extensions import mail, login_manager, migrate, db
-from app.routes import register_routes
+
 from datetime import datetime
 from flask_login import current_user
 from markdown import markdown
+
+from app.register_routes import register_routes
 
 
 def create_app():

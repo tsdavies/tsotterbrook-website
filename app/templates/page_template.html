@@ -85,7 +85,7 @@
           </li>
           <li class="nav-item">
             <a
-              class="nav-link {% if request.path == '/contact' %}active{% endif %}"
+              class="nav-link {% if request.path.startswith('/contact') %}active{% endif %}"
               href="/contact"
               aria-label="Navigate to Contact"
               >Contact</a
