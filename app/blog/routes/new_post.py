@@ -11,20 +11,28 @@ from app.blog.forms.blog_post_form import BlogPostForm
 
 @login_required
 def new_post():
+    """
+    Create a new blog post (admin only).
+    - Validates and sanitises user input.
+    - Converts markdown to HTML while ensuring security.
+    - Saves the new post to the database and redirects to the blog page.
+
+    Returns:
+        Response: Rendered form for creating a post or redirect upon success.
+    """
     if not is_admin():
-        return render_template("forbidden.html")
+        return render_template(
+            "forbidden.html"
+        )  # Render forbidden page for non-admin users
 
     form = BlogPostForm()
     if form.validate_on_submit():
-        # Step 1: Sanitise the raw markdown input
+        # Step 1: Sanitise raw markdown input to prevent malicious content
         sanitized_markdown = bleach.clean(
-            form.content.data,  # Raw markdown
-            tags=[],  # Disallow all HTML tags in markdown
-            attributes={},  # Disallow all HTML attributes in markdown
-            strip=True,  # Strip any disallowed elements entirely
+            form.content.data, tags=[], attributes={}, strip=True
         )
 
-        # Step 2: Sanitise the rendered HTML for preview/display
+        # Step 2: Convert markdown to HTML and sanitise rendered HTML for safe display
         rendered_html = bleach.clean(
             markdown.markdown(
                 sanitized_markdown, extensions=["fenced_code", "codehilite"]
@@ -58,24 +66,29 @@ def new_post():
                 "img": ["src", "alt", "title"],
                 "code": ["class"],
             },
-            strip=True,  # Strip disallowed tags and attributes
+            strip=True,
         )
 
-        # Create the new post using sanitized markdown content
+        # Step 3: Create a new blog post object with sanitised data
         post = BlogPost(
             title=bleach.clean(form.title.data),
-            content=sanitized_markdown,  # Store sanitized markdown
+            content=sanitized_markdown,  # Store the sanitised markdown
             author=current_user.username,
             summary=bleach.clean(form.summary.data),
             repository_url=bleach.clean(form.repository_url.data),
             live_demo_url=bleach.clean(form.live_demo_url.data),
-            priority=form.priority.data,  # Assuming priority is numeric and safe.
+            priority=form.priority.data,  # Priority assumed to be numeric and valid
         )
+
+        # Save the new post to the database
         db.session.add(post)
         db.session.commit()
+
+        # Flash a success message and redirect to the blog page
         flash("Post created!", "success")
         return redirect(url_for("blog.blog"))
 
+    # Render the form for creating a new post
     return render_template(
         "blog_post.html",
         form=form,
