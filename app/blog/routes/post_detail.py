@@ -1,3 +1,4 @@
+import bleach
 import markdown
 from flask import flash, redirect, url_for, render_template
 from flask_login import current_user
@@ -14,8 +15,11 @@ def post_detail(post_id):
 
     if form.validate_on_submit():
         try:
+            # Sanitise user-submitted comment content
+            sanitized_content = bleach.clean(form.content.data)
+
             comment = Comment(
-                content=form.content.data,
+                content=sanitized_content,
                 author=current_user.username,
                 post_id=post.id,
             )
@@ -32,9 +36,18 @@ def post_detail(post_id):
         .order_by(Comment.timestamp.desc())
         .all()
     )
-    rendered_content = Markup(
-        markdown.markdown(post.content, extensions=["fenced_code", "codehilite"])
+
+    # Sanitise and render the blog post content
+    raw_content = markdown.markdown(
+        post.content, extensions=["fenced_code", "codehilite"]
     )
+    safe_content = bleach.clean(
+        raw_content,
+        tags=bleach.sanitizer.ALLOWED_TAGS,
+        attributes=bleach.sanitizer.ALLOWED_ATTRIBUTES,
+    )
+
+    rendered_content = Markup(safe_content)
 
     return render_template(
         "blog_post_detail.html",
