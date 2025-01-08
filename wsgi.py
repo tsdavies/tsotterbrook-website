@@ -7,8 +7,8 @@ logging.basicConfig(stream=sys.stderr)
 # Ensure the correct app path is added to the system path
 # Replace with the absolute path to your project if necessary
 sys.path.insert(
-    0, "/root/customer-account-automation/"
-)  # Update to your app's root directory
+    0, "/root/customer-account-automation/"  # Update to your app's root directory
+)
 
 # Import the application factory
 from app import create_app
@@ -20,7 +20,12 @@ app = create_app()
 application = app
 
 if __name__ == "__main__":
-    # Optional debugging for local development
+    """
+    Entry point for local development.
+    - Prints all registered routes for debugging.
+    - Starts the Flask development server.
+    Note: Production deployments should use a WSGI server like Gunicorn.
+    """
     print("Registered routes:")
     print(app.url_map)  # Prints all routes for inspection
-    app.run()  # Note: debug=True removed for production
+    app.run()  # Start the Flask app (debug=True is omitted for production)
