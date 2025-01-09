@@ -32,6 +32,7 @@
     - [API and Networking](#api-and-networking)
     - [Other Dependencies](#other-dependencies)
 5. [Deployment Instructions](#deployment-instructions)
+6. [References](#references)
 
 ---
 
@@ -220,3 +221,17 @@ This dynamic web application serves as a personal portfolio showcasing various f
     # Flask Environment
     FLASK_ENV=development
     ````
+
+--- 
+
+## References:
+
+### Use of ChatGPT in Development - ChatGPT 4o, 2024
+
+During the development process, I used ChatGPT to assist with converting my JavaScript oriented ideas into Flask/Python
+functionality. As someone who naturally thinks in JavaScript first, I found generative AI particularly helpful in
+bridging the gap between my learning from the module and my prior experience.
+The project’s overall ideas and structure were entirely my own. ChatGPT served as a valuable tool to streamline
+implementation, ensuring my work was both meaningful and well-structured.
+
+
