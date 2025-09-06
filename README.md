@@ -1,10 +1,18 @@
 # Personal Digital Portfolio, Tammy Davies
 
-## Student Number:  **D1478699**
+Skills demostration utilising:
 
-## Openshift URL and User Information
+Python (Flask): backend web framework
+HTML: page structure
+CSS: styles
+JavaScript: interactivity
+Mako: templating
+SQLite database: stores site and author data
 
-### [https://d1478699-cmt-120-cw-2-d1478699-cmt120-cw2.apps.containers.cs.cf.ac.uk/](https://d1478699-cmt-120-cw-2-d1478699-cmt120-cw2.apps.containers.cs.cf.ac.uk/)
+## User Information
+
+The repo will need to be installed locally following the guide below as the OpenShift deploys have now been spun down post course :) An admin user is available if you're running it up locally for 
+the tiered authorisation access on the blog and commenting.
 
 - **Register**: You can register with your own email to create a simple user account to comment with.
 - **Administrator Login**:
